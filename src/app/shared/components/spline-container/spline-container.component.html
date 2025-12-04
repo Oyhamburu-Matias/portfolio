@@ -1,0 +1,35 @@
+<div class="spline-container" [ngStyle]="getContainerStyle()">
+  @if (isLoading && showLoading) {
+    <div class="spline-loading">
+      <div class="loading-spinner"></div>
+      <span>Cargando 3D...</span>
+    </div>
+  }
+  
+  @if (hasError) {
+    <div class="spline-error">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>Error al cargar el objeto 3D</span>
+    </div>
+  }
+  
+  @if (!splineUrl && !isLoading) {
+    <div class="spline-placeholder">
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path>
+        <path d="M12 12l8-4.5"></path>
+        <path d="M12 12v9"></path>
+        <path d="M12 12L4 7.5"></path>
+      </svg>
+      <span class="placeholder-text">{{ placeholderText }}</span>
+      <span class="placeholder-hint">Integración con Spline disponible</span>
+    </div>
+  }
+  
+  <!-- Canvas para Spline (descomentar cuando se integre) -->
+  <!-- <canvas class="spline-canvas"></canvas> -->
+</div>

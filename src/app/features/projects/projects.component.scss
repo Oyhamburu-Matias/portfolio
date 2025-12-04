@@ -1,0 +1,339 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.projects-section {
+  background: var(--color-bg-secondary);
+}
+
+// Filters
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-2xl;
+}
+
+.filter-btn {
+  padding: $spacing-xs $spacing-md;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-full;
+  color: var(--color-text-secondary);
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: all $transition-fast;
+  
+  @include focus-visible;
+  
+  &:hover {
+    color: var(--color-neon-cyan);
+    border-color: var(--color-neon-cyan);
+  }
+  
+  &.active {
+    background: var(--color-neon-cyan);
+    color: var(--color-bg-primary);
+    border-color: var(--color-neon-cyan);
+  }
+}
+
+// Projects Grid
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $spacing-xl;
+}
+
+// Project Card
+.project-card {
+  @include card-cyber;
+  cursor: pointer;
+  overflow: hidden;
+  animation: fade-in-up 0.5s ease-out backwards;
+  
+  &.featured {
+    grid-column: span 1;
+    
+    @include respond-to('lg') {
+      grid-column: span 2;
+    }
+  }
+  
+  &:hover {
+    .project-overlay {
+      opacity: 1;
+    }
+    
+    .image-placeholder {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.project-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background: var(--color-bg-tertiary);
+  
+  .featured & {
+    @include respond-to('lg') {
+      height: 280px;
+    }
+  }
+}
+
+.image-placeholder {
+  @include flex-column-center;
+  height: 100%;
+  gap: $spacing-md;
+  color: var(--color-text-muted);
+  transition: transform $transition-normal;
+  
+  svg {
+    opacity: 0.5;
+  }
+  
+  span {
+    font-size: $font-size-sm;
+    font-family: $font-family-mono;
+    opacity: 0.7;
+  }
+  
+  &.large {
+    svg {
+      width: 80px;
+      height: 80px;
+    }
+    
+    span {
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+.featured-badge {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  padding: $spacing-xs $spacing-sm;
+  background: var(--color-neon-green);
+  color: var(--color-bg-primary);
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  border-radius: $border-radius-sm;
+}
+
+.project-overlay {
+  @include overlay(rgba(0, 0, 0, 0.7));
+  @include flex-center;
+  opacity: 0;
+  transition: opacity $transition-normal;
+}
+
+.view-text {
+  padding: $spacing-sm $spacing-lg;
+  border: 2px solid var(--color-neon-cyan);
+  border-radius: $border-radius-md;
+  color: var(--color-neon-cyan);
+  font-weight: $font-weight-medium;
+}
+
+.project-content {
+  padding: $spacing-lg;
+}
+
+.project-title {
+  font-size: $font-size-xl;
+  margin-bottom: $spacing-sm;
+  color: var(--color-text-primary);
+}
+
+.project-description {
+  font-size: $font-size-sm;
+  color: var(--color-text-secondary);
+  margin-bottom: $spacing-md;
+  @include text-truncate(3);
+}
+
+.project-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+}
+
+.tech-badge {
+  padding: 2px $spacing-sm;
+  background: rgba($color-neon-cyan, 0.1);
+  border: 1px solid rgba($color-neon-cyan, 0.3);
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  color: var(--color-neon-cyan);
+}
+
+.project-links {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.project-link {
+  @include flex-center;
+  gap: $spacing-xs;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: var(--color-neon-cyan);
+  }
+  
+  &.demo-link:hover {
+    color: var(--color-neon-green);
+  }
+}
+
+// Modal
+.project-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  z-index: $z-index-modal;
+  @include flex-center;
+  padding: $spacing-lg;
+  animation: fade-in 0.2s ease-out;
+}
+
+.project-modal {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  background: var(--color-bg-secondary);
+  border-radius: $border-radius-lg;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  animation: scale-in 0.3s ease-out;
+  @include custom-scrollbar;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: $border-radius-full;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  z-index: 10;
+  transition: all $transition-fast;
+  
+  &:hover {
+    background: rgba($color-neon-cyan, 0.2);
+    color: var(--color-neon-cyan);
+  }
+}
+
+.modal-image {
+  height: 250px;
+  background: var(--color-bg-tertiary);
+  @include flex-center;
+}
+
+.modal-content {
+  padding: $spacing-xl;
+}
+
+.modal-title {
+  font-size: $font-size-2xl;
+  margin-bottom: $spacing-md;
+}
+
+.modal-description {
+  font-size: $font-size-base;
+  color: var(--color-text-secondary);
+  line-height: $line-height-relaxed;
+  margin-bottom: $spacing-lg;
+}
+
+.modal-technologies {
+  margin-bottom: $spacing-xl;
+  
+  h4 {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted);
+    margin-bottom: $spacing-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.modal-actions {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  @include flex-center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $border-radius-md;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  transition: all $transition-normal;
+  
+  &.primary {
+    @include btn-neon-filled($color-neon-cyan);
+  }
+  
+  &.secondary {
+    @include btn-neon($color-neon-green);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

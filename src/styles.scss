@@ -1,0 +1,294 @@
+// ==========================================
+// Estilos Globales - Portfolio Cyberpunk
+// ==========================================
+
+// === Imports ===
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+@use 'styles/themes';
+@use 'styles/animations';
+
+// Nota: Las fuentes de Google se cargan desde index.html para mejor rendimiento
+// Si deseas usar fuentes locales, descárgalas y configúralas aquí
+
+// === Reset y Base ===
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: $navbar-height;
+  font-size: 16px;
+  
+  @include respond-below('md') {
+    scroll-padding-top: $navbar-height-mobile;
+  }
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  @include custom-scrollbar(var(--scrollbar-thumb), var(--scrollbar-track));
+}
+
+// === Selección de texto ===
+::selection {
+  background-color: var(--color-accent-primary);
+  color: var(--color-bg-primary);
+}
+
+// === Links ===
+a {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: var(--color-accent-secondary);
+  }
+  
+  @include focus-visible;
+}
+
+// === Tipografía ===
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-display;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: $font-size-5xl;
+  
+  @include respond-below('md') {
+    font-size: $font-size-4xl;
+  }
+  
+  @include respond-below('sm') {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2 {
+  font-size: $font-size-4xl;
+  
+  @include respond-below('md') {
+    font-size: $font-size-3xl;
+  }
+}
+
+h3 {
+  font-size: $font-size-2xl;
+  
+  @include respond-below('md') {
+    font-size: $font-size-xl;
+  }
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  color: var(--color-text-secondary);
+}
+
+// === Imágenes ===
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// === Listas ===
+ul, ol {
+  list-style: none;
+}
+
+// === Botones ===
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  
+  @include focus-visible;
+}
+
+// === Formularios ===
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  
+  @include focus-visible;
+}
+
+// === Contenedor principal ===
+.container {
+  @include container;
+}
+
+// === Secciones ===
+.section {
+  @include section-padding;
+  position: relative;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: $spacing-3xl;
+  
+  h2 {
+    display: inline-block;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--color-accent-primary);
+      border-radius: 2px;
+    }
+  }
+  
+  p {
+    margin-top: $spacing-lg;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// === Utilidades ===
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted { color: var(--color-text-muted); }
+.text-accent { color: var(--color-accent-primary); }
+.text-neon-green { color: var(--color-neon-green); }
+.text-neon-cyan { color: var(--color-neon-cyan); }
+.text-neon-purple { color: var(--color-neon-purple); }
+
+.font-mono { font-family: $font-family-mono; }
+.font-display { font-family: $font-family-display; }
+
+.sr-only {
+  @include visually-hidden;
+}
+
+// === Grid Utility ===
+.grid {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+  
+  @include respond-below('md') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+  
+  @include respond-below('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include respond-below('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+  
+  @include respond-below('xl') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include respond-below('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include respond-below('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+// === Flex Utilities ===
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.gap-sm { gap: $spacing-sm; }
+.gap-md { gap: $spacing-md; }
+.gap-lg { gap: $spacing-lg; }
+.gap-xl { gap: $spacing-xl; }
+
+// === Margin/Padding Utilities ===
+.mt-auto { margin-top: auto; }
+.mb-auto { margin-bottom: auto; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+// === Fondo con partículas (placeholder) ===
+.particles-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+// === Main content wrapper ===
+.main-content {
+  min-height: 100vh;
+  padding-top: $navbar-height;
+  
+  @include respond-below('md') {
+    padding-top: $navbar-height-mobile;
+  }
+}

@@ -1,0 +1,85 @@
+<section id="education" class="education-section section" aria-labelledby="education-title">
+  <div class="container">
+    <!-- Section Title -->
+    <header class="section-title">
+      <h2 id="education-title">Educación</h2>
+      <p>Mi formación académica y certificaciones</p>
+    </header>
+    
+    <div class="education-grid">
+      <!-- Academic Education -->
+      <div class="education-column">
+        <h3 class="column-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+          Formación Académica
+        </h3>
+        
+        <div class="education-list">
+          @for (item of educationItems; track item.id; let i = $index) {
+            <article class="education-card" [style.animation-delay.ms]="i * 100">
+              <div class="card-icon degree" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+              </div>
+              <div class="card-content">
+                <span class="period">{{ item.period }}</span>
+                <h4 class="degree-title">{{ item.degree }}</h4>
+                <span class="institution">{{ item.institution }}</span>
+                @if (item.description) {
+                  <p class="description">{{ item.description }}</p>
+                }
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+      
+      <!-- Certifications -->
+      <div class="education-column">
+        <h3 class="column-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="7"></circle>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+          </svg>
+          Certificaciones y Cursos
+        </h3>
+        
+        <div class="certifications-grid">
+          @for (cert of certifications; track cert.id; let i = $index) {
+            <article 
+              class="certification-card" 
+              [class.course]="cert.type === 'course'"
+              [style.animation-delay.ms]="i * 80"
+            >
+              <div class="cert-icon" aria-hidden="true">
+                @if (cert.type === 'certification') {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                  </svg>
+                }
+              </div>
+              <div class="cert-content">
+                <h4 class="cert-title">{{ cert.degree }}</h4>
+                <div class="cert-meta">
+                  <span class="cert-institution">{{ cert.institution }}</span>
+                  <span class="cert-year">{{ cert.period }}</span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

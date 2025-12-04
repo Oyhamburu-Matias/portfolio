@@ -1,0 +1,190 @@
+<section id="projects" class="projects-section section" aria-labelledby="projects-title">
+  <div class="container">
+    <!-- Section Title -->
+    <header class="section-title">
+      <h2 id="projects-title">Proyectos</h2>
+      <p>Algunos de mis trabajos más recientes</p>
+    </header>
+    
+    <!-- Filters -->
+    <div class="project-filters" role="group" aria-label="Filtrar proyectos por tecnología">
+      <button 
+        class="filter-btn"
+        [class.active]="selectedFilter() === 'all'"
+        (click)="setFilter('all')"
+      >
+        Todos
+      </button>
+      @for (tech of allTechnologies; track tech) {
+        <button 
+          class="filter-btn"
+          [class.active]="selectedFilter() === tech.toLowerCase()"
+          (click)="setFilter(tech.toLowerCase())"
+        >
+          {{ tech }}
+        </button>
+      }
+    </div>
+    
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+      @for (project of getFilteredProjects(); track project.id; let i = $index) {
+        <article 
+          class="project-card"
+          [class.featured]="project.featured"
+          [style.animation-delay.ms]="i * 100"
+          (click)="openProjectModal(project)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Ver detalles de ' + project.title"
+          (keydown.enter)="openProjectModal(project)"
+        >
+          <div class="project-image">
+            <div class="image-placeholder" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <span>{{ project.title }}</span>
+            </div>
+            @if (project.featured) {
+              <span class="featured-badge">Destacado</span>
+            }
+            <div class="project-overlay">
+              <span class="view-text">Ver Proyecto</span>
+            </div>
+          </div>
+          
+          <div class="project-content">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            
+            <div class="project-technologies">
+              @for (tech of project.technologies; track tech) {
+                <span class="tech-badge">{{ tech }}</span>
+              }
+            </div>
+            
+            <div class="project-links">
+              @if (project.demoUrl) {
+                <a 
+                  [href]="project.demoUrl" 
+                  class="project-link demo-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  (click)="$event.stopPropagation()"
+                  aria-label="Ver demo de {{ project.title }}"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                  Demo
+                </a>
+              }
+              @if (project.repoUrl) {
+                <a 
+                  [href]="project.repoUrl" 
+                  class="project-link repo-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  (click)="$event.stopPropagation()"
+                  aria-label="Ver código de {{ project.title }}"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  Código
+                </a>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Project Modal -->
+@if (selectedProject()) {
+  <div 
+    class="project-modal-overlay" 
+    (click)="closeProjectModal()"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'modal-title-' + selectedProject()!.id"
+  >
+    <div class="project-modal" (click)="$event.stopPropagation()">
+      <button 
+        class="modal-close" 
+        (click)="closeProjectModal()"
+        aria-label="Cerrar modal"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      
+      <div class="modal-image">
+        <div class="image-placeholder large">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          <span>{{ selectedProject()!.title }}</span>
+        </div>
+      </div>
+      
+      <div class="modal-content">
+        <h3 [id]="'modal-title-' + selectedProject()!.id" class="modal-title">
+          {{ selectedProject()!.title }}
+        </h3>
+        <p class="modal-description">{{ selectedProject()!.description }}</p>
+        
+        <div class="modal-technologies">
+          <h4>Tecnologías utilizadas:</h4>
+          <div class="tech-list">
+            @for (tech of selectedProject()!.technologies; track tech) {
+              <span class="tech-badge">{{ tech }}</span>
+            }
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          @if (selectedProject()!.demoUrl) {
+            <a 
+              [href]="selectedProject()!.demoUrl" 
+              class="modal-btn primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              Ver Demo
+            </a>
+          }
+          @if (selectedProject()!.repoUrl) {
+            <a 
+              [href]="selectedProject()!.repoUrl" 
+              class="modal-btn secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              Ver Código
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

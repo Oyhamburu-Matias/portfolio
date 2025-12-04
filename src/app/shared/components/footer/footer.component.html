@@ -1,0 +1,56 @@
+<footer class="footer" role="contentinfo">
+  <div class="footer-container">
+    <!-- Top Section -->
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-logo">&lt;Dev/&gt;</span>
+        <p class="brand-tagline">Full Stack Developer</p>
+      </div>
+      
+      <nav class="footer-nav" aria-label="Enlaces del pie de página">
+        <ul class="footer-links">
+          @for (link of footerLinks; track link.sectionId) {
+            <li>
+              <a 
+                class="footer-link" 
+                (click)="navigateTo(link.sectionId)"
+                tabindex="0"
+                role="button"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+      
+      <div class="footer-social">
+        <app-social-links />
+      </div>
+    </div>
+    
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+    
+    <!-- Bottom Section -->
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; {{ currentYear }} Portfolio. Todos los derechos reservados.
+      </p>
+      
+      <button 
+        class="scroll-top-button" 
+        (click)="scrollToTop()"
+        aria-label="Volver al inicio"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="19" x2="12" y2="5"></line>
+          <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Decorative line -->
+  <div class="footer-glow-line" aria-hidden="true"></div>
+</footer>

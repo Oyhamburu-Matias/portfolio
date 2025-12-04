@@ -1,0 +1,179 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.skills-section {
+  background: var(--color-bg-primary);
+}
+
+// Category Tabs
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-2xl;
+}
+
+.category-tab {
+  @include flex-center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-lg;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-full;
+  color: var(--color-text-secondary);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-normal;
+  
+  @include focus-visible;
+  
+  &:hover {
+    color: var(--color-neon-cyan);
+    border-color: var(--color-neon-cyan);
+    background: rgba($color-neon-cyan, 0.05);
+  }
+  
+  &.active {
+    color: var(--color-bg-primary);
+    background: var(--color-neon-cyan);
+    border-color: var(--color-neon-cyan);
+    @include neon-glow($color-neon-cyan, 0.3);
+    
+    .tab-icon {
+      color: var(--color-bg-primary);
+    }
+  }
+  
+  @include respond-below('sm') {
+    padding: $spacing-xs $spacing-md;
+    font-size: $font-size-xs;
+    
+    .tab-label {
+      display: none;
+    }
+  }
+}
+
+.tab-icon {
+  @include flex-center;
+  color: var(--color-neon-cyan);
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Skills Panel
+.skills-panel {
+  animation: fade-in 0.3s ease-out;
+}
+
+// Skills Grid
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-lg;
+  
+  @include respond-below('md') {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Skill Card
+.skill-card {
+  @include card-base;
+  padding: $spacing-lg;
+  border: 1px solid var(--color-border);
+  animation: fade-in-up 0.5s ease-out backwards;
+  
+  &:hover {
+    border-color: var(--color-neon-cyan);
+    
+    .skill-progress {
+      @include neon-glow($color-neon-cyan, 0.2);
+    }
+  }
+}
+
+.skill-header {
+  @include flex-between;
+  margin-bottom: $spacing-sm;
+}
+
+.skill-name {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: var(--color-text-primary);
+}
+
+.skill-percentage {
+  font-size: $font-size-sm;
+  font-family: $font-family-mono;
+  color: var(--color-neon-cyan);
+}
+
+// Progress Bar
+.skill-bar {
+  height: 8px;
+  background: var(--color-bg-tertiary);
+  border-radius: $border-radius-full;
+  overflow: hidden;
+  position: relative;
+}
+
+.skill-progress {
+  height: 100%;
+  width: var(--progress-value, 0%);
+  background: linear-gradient(90deg, var(--color-neon-cyan), var(--color-neon-green));
+  border-radius: $border-radius-full;
+  transition: width 1s ease-out;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

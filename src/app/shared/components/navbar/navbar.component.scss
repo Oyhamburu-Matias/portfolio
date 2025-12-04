@@ -1,0 +1,242 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $navbar-height;
+  z-index: $z-index-fixed;
+  background: transparent;
+  transition: all $transition-normal;
+
+  @include respond-below('md') {
+    height: $navbar-height-mobile;
+  }
+
+  &.scrolled {
+    background: var(--navbar-bg);
+    backdrop-filter: var(--navbar-blur);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.navbar-container {
+  @include container;
+  @include flex-between;
+  height: 100%;
+}
+
+// Logo
+.navbar-logo {
+  cursor: pointer;
+  text-decoration: none;
+  
+  .logo-text {
+    font-family: $font-family-mono;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: var(--color-neon-cyan);
+    transition: all $transition-fast;
+    
+    &:hover {
+      @include neon-text-glow($color-neon-cyan, 0.5);
+    }
+  }
+}
+
+// Desktop Navigation
+.desktop-nav {
+  @include respond-below('lg') {
+    display: none;
+  }
+}
+
+.nav-list {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: block;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all $transition-fast;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--color-neon-cyan);
+    transition: all $transition-fast;
+    transform: translateX(-50%);
+  }
+  
+  &:hover {
+    color: var(--color-neon-cyan);
+    
+    &::after {
+      width: 80%;
+    }
+  }
+}
+
+// Actions
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.cv-button {
+  @include btn-neon($color-neon-green);
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.desktop-only {
+  @include respond-below('lg') {
+    display: none;
+  }
+}
+
+// Mobile Menu Button
+.mobile-menu-button {
+  display: none;
+  padding: $spacing-sm;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  
+  @include respond-below('lg') {
+    display: block;
+  }
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text-primary);
+    border-radius: 2px;
+    transition: all $transition-fast;
+  }
+  
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+// Mobile Navigation
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: $navbar-height-mobile;
+  right: -100%;
+  width: 80%;
+  max-width: 300px;
+  height: calc(100vh - #{$navbar-height-mobile});
+  background: var(--color-bg-secondary);
+  padding: $spacing-xl;
+  transition: right $transition-normal;
+  overflow-y: auto;
+  z-index: $z-index-fixed - 1;
+  
+  @include respond-below('lg') {
+    display: block;
+  }
+  
+  &.open {
+    right: 0;
+  }
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid var(--color-border);
+  
+  &:last-child {
+    border-bottom: none;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: $spacing-md 0;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: var(--color-neon-cyan);
+  }
+}
+
+.mobile-cv {
+  width: 100%;
+  justify-content: center;
+}
+
+// Overlay
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: $z-index-fixed - 2;
+  
+  @include respond-below('lg') {
+    display: block;
+  }
+}

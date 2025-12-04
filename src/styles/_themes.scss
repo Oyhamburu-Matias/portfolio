@@ -1,0 +1,137 @@
+// ==========================================
+// Temas SCSS - Portfolio Cyberpunk
+// ==========================================
+
+@use 'variables' as *;
+
+// === Modo Oscuro (Por defecto) ===
+:root,
+[data-theme="dark"] {
+  // Colores de fondo
+  --color-bg-primary: #{$color-bg-dark};
+  --color-bg-secondary: #{$color-bg-dark-secondary};
+  --color-bg-tertiary: #{$color-bg-dark-tertiary};
+  
+  // Colores de texto
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-muted: #{$color-text-muted};
+  
+  // Colores neón (siempre iguales)
+  --color-neon-green: #{$color-neon-green};
+  --color-neon-green-alt: #{$color-neon-green-alt};
+  --color-neon-blue: #{$color-neon-blue};
+  --color-neon-blue-alt: #{$color-neon-blue-alt};
+  --color-neon-cyan: #{$color-neon-cyan};
+  --color-neon-purple: #{$color-neon-purple};
+  --color-neon-pink: #{$color-neon-pink};
+  
+  // Colores de acento
+  --color-accent-primary: #{$color-neon-cyan};
+  --color-accent-secondary: #{$color-neon-green};
+  
+  // Bordes
+  --color-border: #{$color-border-dark};
+  
+  // Sombras
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.5);
+  
+  // Navbar
+  --navbar-bg: rgba(10, 10, 10, 0.9);
+  --navbar-blur: blur(10px);
+  
+  // Cards
+  --card-bg: rgba(18, 18, 18, 0.8);
+  --card-hover-bg: rgba(26, 26, 26, 0.9);
+  
+  // Inputs
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-focus-border: #{$color-neon-cyan};
+  
+  // Scrollbar
+  --scrollbar-track: #{$color-bg-dark-tertiary};
+  --scrollbar-thumb: #{$color-neon-cyan};
+}
+
+// === Modo Claro ===
+[data-theme="light"] {
+  // Colores de fondo
+  --color-bg-primary: #{$color-bg-light};
+  --color-bg-secondary: #{$color-bg-light-secondary};
+  --color-bg-tertiary: #{$color-bg-light-tertiary};
+  
+  // Colores de texto
+  --color-text-primary: #{$color-text-dark};
+  --color-text-secondary: #{$color-text-dark-secondary};
+  --color-text-muted: #888888;
+  
+  // Colores neón (más saturados para contraste)
+  --color-neon-green: #00cc66;
+  --color-neon-green-alt: #00aa55;
+  --color-neon-blue: #0099cc;
+  --color-neon-blue-alt: #0088bb;
+  --color-neon-cyan: #00aaaa;
+  --color-neon-purple: #9900cc;
+  --color-neon-pink: #cc00cc;
+  
+  // Colores de acento
+  --color-accent-primary: #00aaaa;
+  --color-accent-secondary: #00aa55;
+  
+  // Bordes
+  --color-border: #{$color-border-light};
+  
+  // Sombras
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.15);
+  
+  // Navbar
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --navbar-blur: blur(10px);
+  
+  // Cards
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-hover-bg: rgba(255, 255, 255, 1);
+  
+  // Inputs
+  --input-bg: rgba(0, 0, 0, 0.02);
+  --input-border: rgba(0, 0, 0, 0.1);
+  --input-focus-border: #00aaaa;
+  
+  // Scrollbar
+  --scrollbar-track: #e0e0e0;
+  --scrollbar-thumb: #00aaaa;
+}
+
+// === Transición suave entre temas ===
+html {
+  transition: background-color $transition-theme,
+              color $transition-theme;
+}
+
+body,
+.theme-transition {
+  transition: background-color $transition-theme,
+              color $transition-theme,
+              border-color $transition-theme,
+              box-shadow $transition-theme;
+}
+
+// === Utilidades para temas ===
+.dark-only {
+  display: block;
+  
+  [data-theme="light"] & {
+    display: none;
+  }
+}
+
+.light-only {
+  display: none;
+  
+  [data-theme="light"] & {
+    display: block;
+  }
+}

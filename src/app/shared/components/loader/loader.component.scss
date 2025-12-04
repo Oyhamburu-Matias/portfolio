@@ -1,0 +1,80 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.loader-container {
+  @include flex-center;
+  padding: $spacing-xl;
+  
+  &.full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-primary);
+    z-index: 9999;
+  }
+}
+
+.loader-content {
+  @include flex-column-center;
+  gap: $spacing-lg;
+}
+
+.loader-spinner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.spinner-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation: spin 1.5s linear infinite;
+  
+  &:nth-child(1) {
+    border-top-color: var(--color-neon-cyan);
+    animation-delay: 0s;
+  }
+  
+  &:nth-child(2) {
+    border-right-color: var(--color-neon-green);
+    animation-delay: 0.2s;
+  }
+  
+  &:nth-child(3) {
+    border-bottom-color: var(--color-neon-purple);
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-message {
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  color: var(--color-text-secondary);
+  margin: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
