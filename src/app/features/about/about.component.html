@@ -1,0 +1,89 @@
+<section id="about" class="about-section section" aria-labelledby="about-title">
+  <div class="container">
+    <!-- Section Title -->
+    <header class="section-title">
+      <h2 id="about-title">Sobre Mí</h2>
+      <p>Conoce un poco más sobre quién soy y qué me apasiona</p>
+    </header>
+    
+    <div class="about-content">
+      <!-- Avatar / 3D Container -->
+      <div class="about-visual animate-on-scroll">
+        <div class="avatar-frame">
+          <app-spline-container 
+            [height]="350"
+            placeholderText="Avatar 3D o Foto">
+          </app-spline-container>
+        </div>
+        
+        <!-- Decorative elements -->
+        <div class="visual-decoration" aria-hidden="true">
+          <span class="deco-line line-1"></span>
+          <span class="deco-line line-2"></span>
+          <span class="deco-dot dot-1"></span>
+          <span class="deco-dot dot-2"></span>
+        </div>
+      </div>
+      
+      <!-- Info -->
+      <div class="about-info animate-on-scroll">
+        <!-- Biography -->
+        <div class="bio-text">
+          @for (paragraph of biography.trim().split('\n\n'); track $index) {
+            <p>{{ paragraph.trim() }}</p>
+          }
+        </div>
+        
+        <!-- Personal Info Grid -->
+        <div class="info-grid">
+          @for (info of personalInfo; track info.label) {
+            <div class="info-item">
+              <span class="info-icon" aria-hidden="true">
+                @switch (info.icon) {
+                  @case ('user') {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  }
+                  @case ('location') {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  }
+                  @case ('email') {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  }
+                  @case ('briefcase') {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  }
+                }
+              </span>
+              <div class="info-content">
+                <span class="info-label">{{ info.label }}</span>
+                <span class="info-value">{{ info.value }}</span>
+              </div>
+            </div>
+          }
+        </div>
+        
+        <!-- Interests -->
+        <div class="interests">
+          <h3 class="interests-title">Intereses</h3>
+          <ul class="interests-list" role="list">
+            @for (interest of interests; track interest) {
+              <li class="interest-tag">{{ interest }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

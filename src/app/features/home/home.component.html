@@ -1,0 +1,69 @@
+<section id="hero" class="hero-section" aria-label="Sección de inicio">
+  <!-- Background particles placeholder -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="grid-lines"></div>
+  </div>
+  
+  <div class="hero-container">
+    <div class="hero-content">
+      <!-- Main heading with glitch effect -->
+      <div class="hero-heading">
+        <span class="greeting">¡Hola! Soy</span>
+        <h1 class="name glitch" data-text="Tu Nombre">Tu Nombre</h1>
+        <!-- TODO: Reemplaza "Tu Nombre" con tu nombre real -->
+      </div>
+      
+      <!-- Typing effect subtitle -->
+      <div class="hero-subtitle">
+        <span class="typing-text">{{ currentTypingText() }}</span>
+        <span class="typing-cursor" aria-hidden="true">|</span>
+      </div>
+      
+      <!-- Description -->
+      <p class="hero-description">
+        <!-- TODO: Personaliza esta descripción -->
+        Desarrollador Full Stack apasionado por crear experiencias web innovadoras 
+        y soluciones tecnológicas que marquen la diferencia.
+      </p>
+      
+      <!-- CTA Buttons -->
+      <div class="hero-actions">
+        <button class="btn-primary" (click)="scrollToProjects()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Ver Proyectos
+        </button>
+        <button class="btn-secondary" (click)="scrollToContact()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Contactar
+        </button>
+      </div>
+      
+      <!-- Social Links -->
+      <div class="hero-social">
+        <app-social-links size="medium" />
+      </div>
+    </div>
+    
+    <!-- 3D Spline Container -->
+    <div class="hero-visual">
+      <app-spline-container 
+        [height]="500"
+        placeholderText="Objeto 3D interactivo">
+      </app-spline-container>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator -->
+  <button class="scroll-indicator" (click)="scrollDown()" aria-label="Desplazarse hacia abajo">
+    <span class="scroll-text">Scroll</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="scroll-arrow" aria-hidden="true">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </button>
+</section>

@@ -1,0 +1,79 @@
+<section id="blog" class="blog-section section" aria-labelledby="blog-title">
+  <div class="container">
+    <!-- Section Title -->
+    <header class="section-title">
+      <h2 id="blog-title">Blog</h2>
+      <p>Artículos y reflexiones sobre desarrollo web</p>
+    </header>
+    
+    <!-- Blog Grid -->
+    <div class="blog-grid">
+      @for (post of blogPosts; track post.id; let i = $index) {
+        <article 
+          class="blog-card"
+          [style.animation-delay.ms]="i * 100"
+          (click)="openPost(post.slug)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Leer artículo: ' + post.title"
+          (keydown.enter)="openPost(post.slug)"
+        >
+          <div class="card-image">
+            <div class="image-placeholder" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <div class="card-overlay">
+              <span class="read-more">Leer más</span>
+            </div>
+          </div>
+          
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="post-date">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                {{ post.date }}
+              </span>
+              <span class="read-time">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                {{ post.readTime }}
+              </span>
+            </div>
+            
+            <h3 class="post-title">{{ post.title }}</h3>
+            <p class="post-excerpt">{{ post.excerpt }}</p>
+            
+            <div class="post-tags">
+              @for (tag of post.tags; track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+    
+    <!-- Coming Soon / More Posts -->
+    <div class="blog-footer">
+      <p class="coming-soon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        Más artículos próximamente
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,78 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.theme-toggle {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: $border-radius-full;
+  background: transparent;
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  transition: all $transition-normal;
+  overflow: hidden;
+  
+  @include focus-visible;
+  
+  &:hover {
+    border-color: var(--color-neon-cyan);
+    background: rgba($color-neon-cyan, 0.1);
+    
+    .toggle-icon.active {
+      @include neon-text-glow($color-neon-cyan, 0.3);
+    }
+  }
+}
+
+.toggle-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
+  transition: all $transition-normal;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    color: var(--color-neon-cyan);
+  }
+  
+  svg {
+    display: block;
+  }
+}
+
+.sun {
+  &.active {
+    animation: rotate 20s linear infinite;
+  }
+}
+
+.moon {
+  &.active {
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-2px);
+  }
+}

@@ -1,0 +1,75 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.social-links {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+}
+
+.social-item {
+  list-style: none;
+}
+
+.social-link {
+  @include flex-center;
+  border-radius: $border-radius-full;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: all $transition-normal;
+  text-decoration: none;
+  
+  &:hover {
+    color: var(--color-neon-cyan);
+    border-color: var(--color-neon-cyan);
+    transform: translateY(-3px);
+    @include neon-glow($color-neon-cyan, 0.3);
+  }
+  
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.social-label {
+  margin-left: $spacing-xs;
+  font-size: $font-size-sm;
+}
+
+// Tamaños
+.size-small {
+  .social-link {
+    width: 36px;
+    height: 36px;
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.size-medium {
+  .social-link {
+    width: 44px;
+    height: 44px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.size-large {
+  .social-link {
+    width: 52px;
+    height: 52px;
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

@@ -1,0 +1,108 @@
+<header class="navbar" [class.scrolled]="isScrolled()" role="banner">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <a class="navbar-logo" (click)="navigateTo('hero')" tabindex="0" role="button" aria-label="Ir al inicio">
+      <span class="logo-text">&lt;Dev/&gt;</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="navbar-nav desktop-nav" role="navigation" aria-label="Navegación principal">
+      <ul class="nav-list">
+        @for (item of navItems; track item.sectionId) {
+          <li class="nav-item">
+            <a 
+              class="nav-link" 
+              (click)="navigateTo(item.sectionId)"
+              tabindex="0"
+              role="button"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="navbar-actions">
+      <app-theme-toggle />
+      
+      <a 
+        class="cv-button desktop-only" 
+        href="assets/cv/cv.pdf"
+        download="CV_Desarrollador_FullStack.pdf"
+        aria-label="Descargar CV en PDF"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>CV</span>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        class="mobile-menu-button" 
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-label="Abrir menú de navegación"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger" [class.open]="isMobileMenuOpen()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav 
+    id="mobile-menu"
+    class="mobile-nav" 
+    [class.open]="isMobileMenuOpen()"
+    role="navigation" 
+    aria-label="Navegación móvil"
+  >
+    <ul class="mobile-nav-list">
+      @for (item of navItems; track item.sectionId) {
+        <li class="mobile-nav-item">
+          <a 
+            class="mobile-nav-link" 
+            (click)="navigateTo(item.sectionId)"
+            tabindex="0"
+            role="button"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+      }
+      <li class="mobile-nav-item">
+        <a 
+          class="cv-button mobile-cv" 
+          href="assets/cv/cv.pdf"
+          download="CV_Desarrollador_FullStack.pdf"
+          aria-label="Descargar CV"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Descargar CV</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Overlay for mobile menu -->
+@if (isMobileMenuOpen()) {
+  <div 
+    class="mobile-overlay" 
+    (click)="closeMobileMenu()"
+    aria-hidden="true"
+  ></div>
+}

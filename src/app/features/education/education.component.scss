@@ -1,0 +1,208 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.education-section {
+  background: var(--color-bg-secondary);
+}
+
+.education-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-3xl;
+  
+  @include respond-below('lg') {
+    grid-template-columns: 1fr;
+    gap: $spacing-2xl;
+  }
+}
+
+.education-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-title {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  font-size: $font-size-xl;
+  color: var(--color-text-primary);
+  margin-bottom: $spacing-xl;
+  
+  svg {
+    color: var(--color-neon-cyan);
+  }
+}
+
+// Education List (Academic)
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.education-card {
+  display: flex;
+  gap: $spacing-lg;
+  @include card-base;
+  border: 1px solid var(--color-border);
+  animation: fade-in-up 0.5s ease-out backwards;
+  
+  &:hover {
+    border-color: var(--color-neon-cyan);
+    
+    .card-icon {
+      @include neon-glow($color-neon-cyan, 0.3);
+    }
+  }
+}
+
+.card-icon {
+  @include flex-center;
+  width: 60px;
+  height: 60px;
+  background: rgba($color-neon-cyan, 0.1);
+  border-radius: $border-radius-md;
+  color: var(--color-neon-cyan);
+  flex-shrink: 0;
+  transition: box-shadow $transition-normal;
+  
+  &.degree {
+    background: linear-gradient(135deg, rgba($color-neon-purple, 0.2), rgba($color-neon-cyan, 0.2));
+  }
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.period {
+  font-size: $font-size-sm;
+  font-family: $font-family-mono;
+  color: var(--color-neon-green);
+}
+
+.degree-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.institution {
+  font-size: $font-size-base;
+  color: var(--color-neon-cyan);
+}
+
+.description {
+  font-size: $font-size-sm;
+  color: var(--color-text-secondary);
+  margin: $spacing-sm 0 0;
+  line-height: $line-height-relaxed;
+}
+
+// Certifications Grid
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  
+  @include respond-below('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.certification-card {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: var(--card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-md;
+  animation: fade-in-up 0.5s ease-out backwards;
+  transition: all $transition-normal;
+  
+  &:hover {
+    border-color: var(--color-neon-cyan);
+    transform: translateY(-3px);
+    
+    .cert-icon {
+      color: var(--color-neon-cyan);
+    }
+  }
+  
+  &.course {
+    .cert-icon {
+      background: rgba($color-neon-purple, 0.1);
+      color: var(--color-neon-purple);
+    }
+    
+    &:hover {
+      border-color: var(--color-neon-purple);
+      
+      .cert-icon {
+        color: var(--color-neon-purple);
+      }
+    }
+  }
+}
+
+.cert-icon {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  background: rgba($color-neon-cyan, 0.1);
+  border-radius: $border-radius-sm;
+  color: var(--color-neon-cyan);
+  flex-shrink: 0;
+  transition: color $transition-fast;
+}
+
+.cert-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  min-width: 0;
+}
+
+.cert-title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--color-text-primary);
+  margin: 0;
+  @include text-truncate(2);
+}
+
+.cert-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  font-size: $font-size-xs;
+}
+
+.cert-institution {
+  color: var(--color-text-secondary);
+}
+
+.cert-year {
+  color: var(--color-text-muted);
+  
+  &::before {
+    content: '•';
+    margin-right: $spacing-xs;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

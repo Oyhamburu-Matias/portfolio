@@ -1,0 +1,189 @@
+<section id="contact" class="contact-section section" aria-labelledby="contact-title">
+  <div class="container">
+    <!-- Section Title -->
+    <header class="section-title">
+      <h2 id="contact-title">Contacto</h2>
+      <p>¿Tienes un proyecto en mente? ¡Hablemos!</p>
+    </header>
+    
+    <div class="contact-grid">
+      <!-- Contact Form -->
+      <div class="contact-form-wrapper">
+        <form 
+          [formGroup]="contactForm" 
+          (ngSubmit)="onSubmit()" 
+          class="contact-form"
+          novalidate
+        >
+          <!-- Success Message -->
+          @if (isSubmitted()) {
+            <div class="form-success" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>¡Mensaje enviado con éxito! Te responderé pronto.</span>
+            </div>
+          }
+          
+          <!-- Error Message -->
+          @if (submitError()) {
+            <div class="form-error" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>{{ submitError() }}</span>
+            </div>
+          }
+          
+          <div class="form-row">
+            <!-- Name -->
+            <div class="form-group">
+              <label for="name" class="form-label">Nombre *</label>
+              <input 
+                type="text" 
+                id="name" 
+                formControlName="name"
+                class="form-input"
+                [class.error]="nameControl?.invalid && nameControl?.touched"
+                placeholder="Tu nombre"
+                autocomplete="name"
+              >
+              @if (getErrorMessage('name')) {
+                <span class="error-message" role="alert">{{ getErrorMessage('name') }}</span>
+              }
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email" class="form-label">Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                class="form-input"
+                [class.error]="emailControl?.invalid && emailControl?.touched"
+                placeholder="tu@email.com"
+                autocomplete="email"
+              >
+              @if (getErrorMessage('email')) {
+                <span class="error-message" role="alert">{{ getErrorMessage('email') }}</span>
+              }
+            </div>
+          </div>
+          
+          <!-- Subject -->
+          <div class="form-group">
+            <label for="subject" class="form-label">Asunto *</label>
+            <input 
+              type="text" 
+              id="subject" 
+              formControlName="subject"
+              class="form-input"
+              [class.error]="subjectControl?.invalid && subjectControl?.touched"
+              placeholder="¿En qué puedo ayudarte?"
+            >
+            @if (getErrorMessage('subject')) {
+              <span class="error-message" role="alert">{{ getErrorMessage('subject') }}</span>
+            }
+          </div>
+          
+          <!-- Message -->
+          <div class="form-group">
+            <label for="message" class="form-label">Mensaje *</label>
+            <textarea 
+              id="message" 
+              formControlName="message"
+              class="form-textarea"
+              [class.error]="messageControl?.invalid && messageControl?.touched"
+              placeholder="Cuéntame sobre tu proyecto..."
+              rows="5"
+            ></textarea>
+            @if (getErrorMessage('message')) {
+              <span class="error-message" role="alert">{{ getErrorMessage('message') }}</span>
+            }
+          </div>
+          
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            class="submit-button"
+            [disabled]="isSubmitting()"
+          >
+            @if (isSubmitting()) {
+              <span class="loading-spinner"></span>
+              <span>Enviando...</span>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span>Enviar Mensaje</span>
+            }
+          </button>
+        </form>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <div class="info-card">
+          <h3 class="info-title">Información de Contacto</h3>
+          
+          <div class="info-list">
+            @for (info of contactInfo; track info.label) {
+              <div class="info-item">
+                <span class="info-icon" aria-hidden="true">
+                  @switch (info.icon) {
+                    @case ('email') {
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                    }
+                    @case ('location') {
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    }
+                    @case ('phone') {
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                    }
+                  }
+                </span>
+                <div class="info-content">
+                  <span class="info-label">{{ info.label }}</span>
+                  @if (info.link) {
+                    <a [href]="info.link" class="info-value link">{{ info.value }}</a>
+                  } @else {
+                    <span class="info-value">{{ info.value }}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+          
+          <!-- Social Links -->
+          <div class="social-section">
+            <h4 class="social-title">Sígueme en redes</h4>
+            <app-social-links size="large" />
+          </div>
+          
+          <!-- CV Download -->
+          <a href="assets/cv/cv.pdf" download="CV_Desarrollador.pdf" class="cv-download">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Descargar CV
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

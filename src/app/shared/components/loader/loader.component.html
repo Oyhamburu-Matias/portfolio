@@ -1,0 +1,12 @@
+<div class="loader-container" [class.full-screen]="fullScreen" role="status" aria-live="polite">
+  <div class="loader-content">
+    <div class="loader-spinner">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+    </div>
+    @if (message) {
+      <p class="loader-message">{{ message }}</p>
+    }
+  </div>
+</div>
