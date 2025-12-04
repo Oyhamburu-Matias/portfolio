@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
@@ -18,6 +18,8 @@ interface ContactInfo {
   styleUrl: './contact.component.scss'
 })
 export class ContactComponent {
+  private readonly fb = inject(FormBuilder);
+  
   isSubmitting = signal(false);
   isSubmitted = signal(false);
   submitError = signal<string | null>(null);
@@ -45,7 +47,7 @@ export class ContactComponent {
     }
   ];
   
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
@@ -70,9 +72,8 @@ export class ContactComponent {
     
     try {
       // TODO: Integrar con backend cuando esté disponible
-      // Simular envío por ahora
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      // Por ahora, solo marcamos como enviado después de validar
+      // En producción, reemplazar con llamada real al backend:
       // const response = await fetch('/api/contact', {
       //   method: 'POST',
       //   headers: { 'Content-Type': 'application/json' },

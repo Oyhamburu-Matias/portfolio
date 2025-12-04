@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, PLATFORM_ID, inject, signal, NgZone } from '@angular/core';
+import { Component, OnDestroy, PLATFORM_ID, inject, signal, afterNextRender, Injector } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
 import { SplineContainerComponent } from '../../shared/components/spline-container/spline-container.component';
@@ -11,10 +11,10 @@ import { ScrollService } from '../../core/services/scroll.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly scrollService = inject(ScrollService);
-  private readonly ngZone = inject(NgZone);
+  private readonly injector = inject(Injector);
   
   // Textos para el efecto de typing
   readonly typingTexts = [
@@ -30,11 +30,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   private isDeleting = false;
   private typingTimeout?: ReturnType<typeof setTimeout>;
   
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      // Start typing after initial render to avoid ExpressionChangedAfterItHasBeenChecked
-      setTimeout(() => this.startTypingEffect(), 100);
-    }
+  constructor() {
+    // Use afterNextRender to start typing after initial render
+    afterNextRender(() => {
+      if (isPlatformBrowser(this.platformId)) {
+        this.startTypingEffect();
+      }
+    }, { injector: this.injector });
   }
   
   ngOnDestroy(): void {
@@ -53,9 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       
       if (!this.isDeleting) {
         // Typing
-        this.ngZone.run(() => {
-          this.currentTypingText.set(currentText.substring(0, this.charIndex + 1));
-        });
+        this.currentTypingText.set(currentText.substring(0, this.charIndex + 1));
         this.charIndex++;
         
         if (this.charIndex === currentText.length) {
@@ -65,9 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       } else {
         // Deleting
-        this.ngZone.run(() => {
-          this.currentTypingText.set(currentText.substring(0, this.charIndex - 1));
-        });
+        this.currentTypingText.set(currentText.substring(0, this.charIndex - 1));
         this.charIndex--;
         
         if (this.charIndex === 0) {

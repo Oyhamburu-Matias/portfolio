@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ScrollService } from '../../core/services/scroll.service';
 
 interface Project {
   id: number;
@@ -20,6 +21,8 @@ interface Project {
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent {
+  private readonly scrollService = inject(ScrollService);
+  
   selectedFilter = signal<string>('all');
   selectedProject = signal<Project | null>(null);
   
@@ -85,11 +88,11 @@ export class ProjectsComponent {
   
   openProjectModal(project: Project): void {
     this.selectedProject.set(project);
-    document.body.style.overflow = 'hidden';
+    this.scrollService.lockScroll();
   }
   
   closeProjectModal(): void {
     this.selectedProject.set(null);
-    document.body.style.overflow = '';
+    this.scrollService.unlockScroll();
   }
 }

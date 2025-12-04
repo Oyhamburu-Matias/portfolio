@@ -50,6 +50,7 @@ export class SplineContainerComponent implements AfterViewInit, OnDestroy {
     if (this.splineUrl) {
       this.loadSplineScene();
     } else {
+      // No URL provided, show placeholder immediately
       this.isLoading = false;
     }
   }
@@ -81,6 +82,7 @@ export class SplineContainerComponent implements AfterViewInit, OnDestroy {
        *   const spline = new Application(canvas);
        *   await spline.load(this.splineUrl);
        *   this.splineApp = spline;
+       *   this.isLoading = false;
        * }
        * 
        * 3. Añade un <canvas class="spline-canvas"></canvas> al template
@@ -89,8 +91,7 @@ export class SplineContainerComponent implements AfterViewInit, OnDestroy {
        *    Ejemplo: https://prod.spline.design/xxxxx/scene.splinecode
        */
       
-      // Simular carga para demostración
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Placeholder: Spline no está configurado, mostrar placeholder
       this.isLoading = false;
       
     } catch (error) {

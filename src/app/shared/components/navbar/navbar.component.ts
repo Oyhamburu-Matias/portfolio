@@ -53,14 +53,4 @@ export class NavbarComponent {
   closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
   }
-  
-  downloadCV(): void {
-    // Descargar CV - el archivo debe estar en assets/cv/cv.pdf
-    if (isPlatformBrowser(this.platformId)) {
-      const link = document.createElement('a');
-      link.href = 'assets/cv/cv.pdf';
-      link.download = 'CV_Desarrollador_FullStack.pdf';
-      link.click();
-    }
-  }
 }
